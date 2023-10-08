@@ -5,6 +5,10 @@ public class Calculadora {
         return a + b;
     }
 
+    public float divisao(int num, int den){
+        return (float) num / den;
+    }
+
     public static void main(String[] args) {
         Calculadora calc = new Calculadora();
         System.out.println(calc.soma(2, 2) == 4);
