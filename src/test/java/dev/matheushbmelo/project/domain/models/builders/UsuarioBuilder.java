@@ -8,9 +8,10 @@ public class UsuarioBuilder {
     private String email;
     private String senha;
 
-    private UsuarioBuilder() {}
+    private UsuarioBuilder() {
+    }
 
-    public static UsuarioBuilder umUsuario(){
+    public static UsuarioBuilder umUsuario() {
         UsuarioBuilder usuarioBuilder = new UsuarioBuilder();
         inicializarUsuario(usuarioBuilder);
         return usuarioBuilder;
@@ -23,27 +24,27 @@ public class UsuarioBuilder {
         usuarioBuilder.senha = "12345678";
     }
 
-    public UsuarioBuilder comId(Long id){
+    public UsuarioBuilder comId(Long id) {
         this.id = id;
         return this;
     }
 
-    public UsuarioBuilder comNome(String nome){
+    public UsuarioBuilder comNome(String nome) {
         this.nome = nome;
         return this;
     }
 
-    public UsuarioBuilder comEmail(String email){
+    public UsuarioBuilder comEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public UsuarioBuilder comSenha(String senha){
+    public UsuarioBuilder comSenha(String senha) {
         this.senha = senha;
         return this;
     }
 
-    public Usuario agora(){
+    public Usuario agora() {
         return new Usuario(id, nome, email, senha);
     }
 }

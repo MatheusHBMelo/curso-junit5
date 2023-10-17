@@ -1,11 +1,11 @@
 package dev.matheushbmelo.classes;
 
 public class Calculadora {
-    public int soma(int a, int b){
+    public int soma(int a, int b) {
         return a + b;
     }
 
-    public float divisao(int num, int den){
+    public float divisao(int num, int den) {
         return (float) num / den;
     }
 
