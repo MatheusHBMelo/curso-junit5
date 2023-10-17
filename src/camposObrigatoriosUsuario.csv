@@ -1,0 +1,4 @@
+Id, Nome, Email, Senha, Mensagem
+1, NULL, user@email.com, 12345, O nome não pode ser nulo!
+2, usuario, NULL, 12345, O email não pode ser nulo!
+3, usuario, user@email.com, NULL, A senha não pode ser nula!
