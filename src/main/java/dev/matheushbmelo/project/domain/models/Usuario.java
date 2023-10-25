@@ -5,12 +5,12 @@ import dev.matheushbmelo.project.domain.exceptions.ValidationException;
 import java.util.Objects;
 
 public class Usuario {
-    private long id;
+    private  Long id;
     private String nome;
     private String email;
     private String senha;
 
-    public Usuario(long id, String nome, String email, String senha) {
+    public Usuario(Long id, String nome, String email, String senha) {
         if (nome == null) throw new ValidationException("O nome não pode ser nulo!");
         if (email == null) throw new ValidationException("O email não pode ser nulo!");
         if (senha == null) throw new ValidationException("A senha não pode ser nula!");
@@ -21,7 +21,7 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -48,5 +48,15 @@ public class Usuario {
     @Override
     public int hashCode() {
         return Objects.hash(nome, email, senha);
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
     }
 }

@@ -3,7 +3,7 @@ package dev.matheushbmelo.project.domain.models.builders;
 import dev.matheushbmelo.project.domain.models.Usuario;
 
 public class UsuarioBuilder {
-    private long id;
+    private Long id;
     private String nome;
     private String email;
     private String senha;
