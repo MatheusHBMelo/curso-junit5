@@ -13,14 +13,14 @@ public class UserServiceComUserMemoryRepositoryTest {
 
     @Test
     @Order(1)
-    public void deveSalvarUsuarioValido(){
+    public void deveSalvarUsuarioValido() {
         Usuario user = service.salvar(UsuarioBuilder.umUsuario().comId(null).agora());
         Assertions.assertNotNull(user.getId());
     }
 
     @Test
     @Order(2)
-    public void deveRejeitarUsuarioExistente(){
+    public void deveRejeitarUsuarioExistente() {
         ValidationException ex = Assertions.assertThrows(ValidationException.class,
                 () -> service.salvar(UsuarioBuilder.umUsuario().comId(null).agora())
         );
