@@ -1,6 +1,6 @@
 package dev.matheushbmelo.project.domain.models.builders;
 
-import dev.matheushbmelo.project.domain.models.Usuario;
+import dev.matheushbmelo.project.domain.models.Conta;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -133,6 +133,6 @@ public class BuilderMaster {
 
     public static void main(String[] args) {
         BuilderMaster master = new BuilderMaster();
-        master.gerarCodigoClasse(Usuario.class);
+        master.gerarCodigoClasse(Conta.class);
     }
 }

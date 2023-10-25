@@ -2,6 +2,8 @@ package dev.matheushbmelo.project.domain.models;
 
 import dev.matheushbmelo.project.domain.exceptions.ValidationException;
 
+import java.util.Objects;
+
 public class Usuario {
     private long id;
     private String nome;
@@ -33,5 +35,18 @@ public class Usuario {
 
     public String getSenha() {
         return senha;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, email, senha);
     }
 }
