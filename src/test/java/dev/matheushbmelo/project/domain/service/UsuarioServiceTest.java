@@ -8,25 +8,29 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+@ExtendWith(MockitoExtension.class)
 public class UsuarioServiceTest {
     @InjectMocks private UsuarioService service;
     @Mock private UsuarioRepository repository;
 
-    @BeforeEach
-    public void setup(){
-        // Versão sem as anotações Mock e InjectMock
-//        repository = Mockito.mock(UsuarioRepository.class);
-//        service = new UsuarioService(repository);
-
-        MockitoAnnotations.openMocks(this);
-    }
+//    @BeforeEach
+//    public void setup(){
+//        // Versão sem as anotações Mock e InjectMock
+////        repository = Mockito.mock(UsuarioRepository.class);
+////        service = new UsuarioService(repository);
+//
+//
+//        // MockitoAnnotations.openMocks(this); Não precisa caso use ExtendWith com MockitoExtension.class
+//    }
 
     @AfterEach
     public void tearDown(){
