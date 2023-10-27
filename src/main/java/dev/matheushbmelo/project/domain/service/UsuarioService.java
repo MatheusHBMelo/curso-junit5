@@ -15,8 +15,8 @@ public class UsuarioService {
     }
 
     public Usuario salvar(Usuario usuario) {
-        repository.getUsuarioByEmail(usuario.getEmail()).ifPresent(usuario1 -> {
-            throw new ValidationException(String.format("O usuário %s já está cadastrado", usuario.getEmail()));
+        repository.getUsuarioByEmail(usuario.getEmail()).ifPresent(user -> {
+            throw new ValidationException(String.format("O usuário %s já está cadastrado", user.getEmail()));
         });
         return repository.salvar(usuario);
     }
