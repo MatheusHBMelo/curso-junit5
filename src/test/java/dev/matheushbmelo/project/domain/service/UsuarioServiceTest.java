@@ -1,6 +1,7 @@
 package dev.matheushbmelo.project.domain.service;
 
 import dev.matheushbmelo.project.domain.builder.UsuarioBuilder;
+import dev.matheushbmelo.project.domain.exceptions.ValidationException;
 import dev.matheushbmelo.project.domain.infra.UsuarioDummyRepository;
 import dev.matheushbmelo.project.domain.models.Usuario;
 import dev.matheushbmelo.project.domain.service.reporitories.UsuarioRepository;
@@ -88,5 +89,19 @@ public class UsuarioServiceTest {
 
         Mockito.verify(repository).getUsuarioByEmail(novoUsuario.getEmail());
         Mockito.verify(repository).salvar(novoUsuario);
+    }
+
+    @Test
+    public void deveRejeitarUsuarioExistente(){
+        Usuario user = UsuarioBuilder.umUsuario().comId(null).agora();
+
+        Mockito.when(repository.getUsuarioByEmail(user.getEmail())).thenReturn(Optional.of(UsuarioBuilder.umUsuario().agora()));
+
+        ValidationException ex = Assertions.assertThrows(ValidationException.class,
+                () -> service.salvar(user)
+                );
+        Assertions.assertTrue(ex.getMessage().endsWith("já está cadastrado"));
+
+        Mockito.verify(repository, Mockito.never()).salvar(user);
     }
 }
