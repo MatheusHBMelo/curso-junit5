@@ -1,5 +1,6 @@
 package dev.matheushbmelo.project.domain.service;
 
+import dev.matheushbmelo.project.domain.events.ContaEvent;
 import dev.matheushbmelo.project.domain.exceptions.ValidationException;
 import dev.matheushbmelo.project.domain.models.Conta;
 import dev.matheushbmelo.project.domain.models.builders.ContaBuilder;
@@ -21,11 +22,13 @@ import java.util.Arrays;
 public class ContaServiceTest {
     @Mock private ContaRepository repository;
     @InjectMocks private ContaService service;
+    @Mock private ContaEvent event;
 
     @Test
-    public void deveSalvarContaComSucesso(){
+    public void deveSalvarContaComSucesso() throws Exception{
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Mockito.when(repository.salvar(contaToSave)).thenReturn(ContaBuilder.umaConta().agora());
+        Mockito.doNothing().when(event).dispatch(ContaBuilder.umaConta().agora(), ContaEvent.EventType.CREATED);
 
         Conta contaSalved = service.salvar(contaToSave);
 
@@ -45,7 +48,7 @@ public class ContaServiceTest {
     }
 
     @Test
-    public void deveSalvarContaMesmoJaExistindoOutras(){
+    public void deveSalvarContaMesmoJaExistindoOutras() throws Exception{
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Mockito.when(repository.obterContasPorUsuario(contaToSave.getUsuario().getId())).thenReturn(Arrays.asList(ContaBuilder.umaConta().comNome("Outra conta").agora()));
         Mockito.when(repository.salvar(contaToSave)).thenReturn(ContaBuilder.umaConta().agora());
@@ -53,5 +56,20 @@ public class ContaServiceTest {
         Conta contaSalved = service.salvar(contaToSave);
 
         Assertions.assertNotNull(contaSalved.getId());
+    }
+
+    @Test
+    public void naoDeveManterContaSemEvento() throws Exception{
+        Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
+        Conta contaSalva = ContaBuilder.umaConta().agora();
+        Mockito.when(repository.salvar(contaToSave)).thenReturn(contaSalva);
+        Mockito.doThrow(new Exception("Falha catastrofica")).when(event).dispatch(contaSalva, ContaEvent.EventType.CREATED);
+
+        String message = Assertions.assertThrows(Exception.class,
+                () -> service.salvar(contaToSave)
+        ).getMessage();
+        Assertions.assertEquals("Falha na criação da conta, tente novamente.", message);
+
+        Mockito.verify(repository).deletar(contaSalva);
     }
 }

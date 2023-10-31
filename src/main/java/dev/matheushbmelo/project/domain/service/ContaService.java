@@ -1,5 +1,6 @@
 package dev.matheushbmelo.project.domain.service;
 
+import dev.matheushbmelo.project.domain.events.ContaEvent;
 import dev.matheushbmelo.project.domain.exceptions.ValidationException;
 import dev.matheushbmelo.project.domain.models.Conta;
 import dev.matheushbmelo.project.domain.service.reporitories.ContaRepository;
@@ -8,9 +9,11 @@ import java.util.List;
 
 public class ContaService {
     private ContaRepository repository;
+    private ContaEvent event;
 
-    public ContaService(ContaRepository contaRepository){
+    public ContaService(ContaRepository contaRepository, ContaEvent event){
         this.repository = contaRepository;
+        this.event = event;
     }
 
     public Conta salvar(Conta conta){
@@ -20,6 +23,13 @@ public class ContaService {
                 throw new ValidationException("Usuário já possui uma conta com este nome");
             }
         });
-        return repository.salvar(conta);
+        Conta contaSaved = repository.salvar(conta);
+        try {
+            event.dispatch(contaSaved, ContaEvent.EventType.CREATED);
+        } catch (Exception e){
+            repository.deletar(contaSaved);
+            throw new RuntimeException("Falha na criação da conta, tente novamente.");
+        }
+        return contaSaved;
     }
 }
