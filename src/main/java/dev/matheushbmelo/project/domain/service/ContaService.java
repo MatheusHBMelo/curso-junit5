@@ -5,6 +5,7 @@ import dev.matheushbmelo.project.domain.exceptions.ValidationException;
 import dev.matheushbmelo.project.domain.models.Conta;
 import dev.matheushbmelo.project.domain.service.reporitories.ContaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ContaService {
@@ -23,7 +24,7 @@ public class ContaService {
                 throw new ValidationException("Usuário já possui uma conta com este nome");
             }
         });
-        Conta contaSaved = repository.salvar(conta);
+        Conta contaSaved = repository.salvar(new Conta(conta.getId(), conta.getNome() + LocalDateTime.now(), conta.getUsuario()));
         try {
             event.dispatch(contaSaved, ContaEvent.EventType.CREATED);
         } catch (Exception e){

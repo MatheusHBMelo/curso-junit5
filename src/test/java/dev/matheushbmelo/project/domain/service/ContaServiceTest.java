@@ -27,7 +27,7 @@ public class ContaServiceTest {
     @Test
     public void deveSalvarContaComSucesso() throws Exception{
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
-        Mockito.when(repository.salvar(contaToSave)).thenReturn(ContaBuilder.umaConta().agora());
+        Mockito.when(repository.salvar(Mockito.any(Conta.class))).thenReturn(ContaBuilder.umaConta().agora());
         Mockito.doNothing().when(event).dispatch(ContaBuilder.umaConta().agora(), ContaEvent.EventType.CREATED);
 
         Conta contaSalved = service.salvar(contaToSave);
@@ -51,7 +51,7 @@ public class ContaServiceTest {
     public void deveSalvarContaMesmoJaExistindoOutras() throws Exception{
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Mockito.when(repository.obterContasPorUsuario(contaToSave.getUsuario().getId())).thenReturn(Arrays.asList(ContaBuilder.umaConta().comNome("Outra conta").agora()));
-        Mockito.when(repository.salvar(contaToSave)).thenReturn(ContaBuilder.umaConta().agora());
+        Mockito.when(repository.salvar(Mockito.any(Conta.class))).thenReturn(ContaBuilder.umaConta().agora());
 
         Conta contaSalved = service.salvar(contaToSave);
 
@@ -62,7 +62,7 @@ public class ContaServiceTest {
     public void naoDeveManterContaSemEvento() throws Exception{
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Conta contaSalva = ContaBuilder.umaConta().agora();
-        Mockito.when(repository.salvar(contaToSave)).thenReturn(contaSalva);
+        Mockito.when(repository.salvar(Mockito.any(Conta.class))).thenReturn(contaSalva);
         Mockito.doThrow(new Exception("Falha catastrofica")).when(event).dispatch(contaSalva, ContaEvent.EventType.CREATED);
 
         String message = Assertions.assertThrows(Exception.class,
