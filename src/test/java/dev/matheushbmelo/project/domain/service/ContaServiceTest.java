@@ -8,9 +8,7 @@ import dev.matheushbmelo.project.domain.service.reporitories.ContaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -23,6 +21,7 @@ public class ContaServiceTest {
     @Mock private ContaRepository repository;
     @InjectMocks private ContaService service;
     @Mock private ContaEvent event;
+    @Captor private ArgumentCaptor<Conta> contaCaptor;
 
     @Test
     public void deveSalvarContaComSucesso() throws Exception{
@@ -33,6 +32,9 @@ public class ContaServiceTest {
         Conta contaSalved = service.salvar(contaToSave);
 
         Assertions.assertNotNull(contaSalved.getId());
+
+        Mockito.verify(repository).salvar(contaCaptor.capture());
+        Assertions.assertTrue(contaCaptor.getValue().getNome().startsWith("Conta válida"));
     }
 
     @Test
