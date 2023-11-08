@@ -1,6 +1,7 @@
 package dev.matheushbmelo.project.domain.models;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Transacao {
     private Long id;
@@ -9,7 +10,6 @@ public class Transacao {
     private Conta conta;
     private LocalDate data;
     private Boolean status;
-
 
 
     public Long getId() {
@@ -58,5 +58,18 @@ public class Transacao {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transacao transacao = (Transacao) o;
+        return Objects.equals(id, transacao.id) && Objects.equals(descricao, transacao.descricao) && Objects.equals(valor, transacao.valor) && Objects.equals(conta, transacao.conta) && Objects.equals(data, transacao.data) && Objects.equals(status, transacao.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, descricao, valor, conta, data, status);
     }
 }
