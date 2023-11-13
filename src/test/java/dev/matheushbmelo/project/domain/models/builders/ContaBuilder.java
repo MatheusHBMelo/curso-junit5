@@ -10,7 +10,8 @@ public class ContaBuilder {
     private String nome;
     private Usuario usuario;
 
-    private ContaBuilder(){}
+    private ContaBuilder() {
+    }
 
     public static ContaBuilder umaConta() {
         ContaBuilder builder = new ContaBuilder();

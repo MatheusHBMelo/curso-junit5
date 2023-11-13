@@ -10,10 +10,10 @@ public class Conta {
     private Usuario usuario;
 
     public Conta(Long id, String nome, Usuario usuario) {
-        if (nome == null){
+        if (nome == null) {
             throw new ValidationException("O nome não pode ser nulo!");
         }
-        if (usuario == null){
+        if (usuario == null) {
             throw new ValidationException("O usuario não pode ser nulo!");
         }
 

@@ -38,7 +38,7 @@ public class TransacaoServiceTest {
     private CurrentTime currentTime;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         Mockito.when(currentTime.getCurrentTime()).thenReturn(LocalDateTime.of(2023, 11, 8, 4, 30, 28));
     }
 

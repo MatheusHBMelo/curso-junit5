@@ -10,7 +10,7 @@ public class UsuarioService {
 
     private UsuarioRepository repository;
 
-    public UsuarioService(UsuarioRepository repository){
+    public UsuarioService(UsuarioRepository repository) {
         this.repository = repository;
     }
 
@@ -21,7 +21,7 @@ public class UsuarioService {
         return repository.salvar(usuario);
     }
 
-    public Optional<Usuario> getUsuarioByEmail(String email){
+    public Optional<Usuario> getUsuarioByEmail(String email) {
         return repository.getUsuarioByEmail(email);
     }
 }

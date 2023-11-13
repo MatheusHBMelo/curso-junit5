@@ -18,13 +18,17 @@ import java.util.Arrays;
 @ExtendWith(MockitoExtension.class)
 // @MockitoSettings(strictness = Strictness.LENIENT)
 public class ContaServiceTest {
-    @Mock private ContaRepository repository;
-    @InjectMocks private ContaService service;
-    @Mock private ContaEvent event;
-    @Captor private ArgumentCaptor<Conta> contaCaptor;
+    @Mock
+    private ContaRepository repository;
+    @InjectMocks
+    private ContaService service;
+    @Mock
+    private ContaEvent event;
+    @Captor
+    private ArgumentCaptor<Conta> contaCaptor;
 
     @Test
-    public void deveSalvarContaComSucesso() throws Exception{
+    public void deveSalvarContaComSucesso() throws Exception {
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Mockito.when(repository.salvar(Mockito.any(Conta.class))).thenReturn(ContaBuilder.umaConta().agora());
         Mockito.doNothing().when(event).dispatch(ContaBuilder.umaConta().agora(), ContaEvent.EventType.CREATED);
@@ -38,7 +42,7 @@ public class ContaServiceTest {
     }
 
     @Test
-    public void deveRejeitarContaRepetida(){
+    public void deveRejeitarContaRepetida() {
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Mockito.when(repository.obterContasPorUsuario(contaToSave.getUsuario().getId())).thenReturn(Arrays.asList(ContaBuilder.umaConta().agora()));
 //        Mockito.when(repository.salvar(contaToSave)).thenReturn(ContaBuilder.umaConta().agora());
@@ -50,7 +54,7 @@ public class ContaServiceTest {
     }
 
     @Test
-    public void deveSalvarContaMesmoJaExistindoOutras() throws Exception{
+    public void deveSalvarContaMesmoJaExistindoOutras() throws Exception {
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Mockito.when(repository.obterContasPorUsuario(contaToSave.getUsuario().getId())).thenReturn(Arrays.asList(ContaBuilder.umaConta().comNome("Outra conta").agora()));
         Mockito.when(repository.salvar(Mockito.any(Conta.class))).thenReturn(ContaBuilder.umaConta().agora());
@@ -61,7 +65,7 @@ public class ContaServiceTest {
     }
 
     @Test
-    public void naoDeveManterContaSemEvento() throws Exception{
+    public void naoDeveManterContaSemEvento() throws Exception {
         Conta contaToSave = ContaBuilder.umaConta().comId(null).agora();
         Conta contaSalva = ContaBuilder.umaConta().agora();
         Mockito.when(repository.salvar(Mockito.any(Conta.class))).thenReturn(contaSalva);

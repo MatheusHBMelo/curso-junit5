@@ -78,7 +78,7 @@ public class UsuarioTest {
     // O parameterized test com dados externos
     @ParameterizedTest(name = "[{0}] - {4}")
     @CsvFileSource(files = "src\\camposObrigatoriosUsuario.csv", nullValues = "NULL", numLinesToSkip = 1)
-    public void verificarCamposObrigatorioDoUsuarioComArquivoExterno(Long id, String nome, String email, String senha, String mensagem){
+    public void verificarCamposObrigatorioDoUsuarioComArquivoExterno(Long id, String nome, String email, String senha, String mensagem) {
         ValidationException ex = Assertions.assertThrows(ValidationException.class,
                 () -> umUsuario().comId(id).comNome(nome).comEmail(email).comSenha(senha).agora()
         );

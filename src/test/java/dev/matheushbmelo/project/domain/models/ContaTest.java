@@ -28,14 +28,14 @@ public class ContaTest {
 
     @ParameterizedTest
     @MethodSource(value = "dataProvider")
-    public void deveValidarCamposObrigatoriosDaConta(long id, String nome, Usuario usuario, String mensagem){
+    public void deveValidarCamposObrigatoriosDaConta(long id, String nome, Usuario usuario, String mensagem) {
         String error = Assertions.assertThrows(ValidationException.class,
                 () -> ContaBuilder.umaConta().comId(id).comNome(nome).comUsuario(usuario).agora()
         ).getMessage();
         Assertions.assertEquals(mensagem, error);
     }
 
-    private static Stream<Arguments> dataProvider(){
+    private static Stream<Arguments> dataProvider() {
         return Stream.of(
                 Arguments.of(1L, null, UsuarioBuilder.umUsuario().agora(), "O nome não pode ser nulo!"),
                 Arguments.of(1L, "Conta válida", null, "O usuario não pode ser nulo!")

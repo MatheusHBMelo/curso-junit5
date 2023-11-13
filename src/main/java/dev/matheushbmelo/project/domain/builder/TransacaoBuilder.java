@@ -1,13 +1,15 @@
 package dev.matheushbmelo.project.domain.builder;
 
 import java.time.LocalDate;
+
 import dev.matheushbmelo.project.domain.models.Conta;
 import dev.matheushbmelo.project.domain.models.Transacao;
 
 public class TransacaoBuilder {
     private Transacao elemento;
 
-    private TransacaoBuilder(){}
+    private TransacaoBuilder() {
+    }
 
     public static TransacaoBuilder umaTransacao() {
         TransacaoBuilder builder = new TransacaoBuilder();

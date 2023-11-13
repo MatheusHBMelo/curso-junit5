@@ -12,22 +12,22 @@ public class ContaService {
     private ContaRepository repository;
     private ContaEvent event;
 
-    public ContaService(ContaRepository contaRepository, ContaEvent event){
+    public ContaService(ContaRepository contaRepository, ContaEvent event) {
         this.repository = contaRepository;
         this.event = event;
     }
 
-    public Conta salvar(Conta conta){
+    public Conta salvar(Conta conta) {
         List<Conta> contas = repository.obterContasPorUsuario(conta.getUsuario().getId());
-        contas.stream().forEach(contaExistente -> {
-            if (conta.getNome().equalsIgnoreCase(contaExistente.getNome())){
+        contas.forEach(contaExistente -> {
+            if (conta.getNome().equalsIgnoreCase(contaExistente.getNome())) {
                 throw new ValidationException("Usuário já possui uma conta com este nome");
             }
         });
         Conta contaSaved = repository.salvar(new Conta(conta.getId(), conta.getNome() + LocalDateTime.now(), conta.getUsuario()));
         try {
             event.dispatch(contaSaved, ContaEvent.EventType.CREATED);
-        } catch (Exception e){
+        } catch (Exception e) {
             repository.deletar(contaSaved);
             throw new RuntimeException("Falha na criação da conta, tente novamente.");
         }

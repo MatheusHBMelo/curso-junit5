@@ -5,7 +5,7 @@ import dev.matheushbmelo.project.domain.exceptions.ValidationException;
 import java.util.Objects;
 
 public class Usuario {
-    private  Long id;
+    private Long id;
     private String nome;
     private String email;
     private String senha;

@@ -11,7 +11,7 @@ public class UsuarioMemoryRepository implements UsuarioRepository {
     private List<Usuario> users;
     private Long currentId;
 
-    public UsuarioMemoryRepository(){
+    public UsuarioMemoryRepository() {
         currentId = 0L;
         users = new ArrayList<>();
         salvar(new Usuario(null, "User #1", "user1@mail.com", "123456"));
@@ -31,11 +31,11 @@ public class UsuarioMemoryRepository implements UsuarioRepository {
                 .findFirst();
     }
 
-    private Long nextId(){
+    private Long nextId() {
         return ++currentId;
     }
 
-    public void printUsers(){
+    public void printUsers() {
         System.out.println(users);
     }
 

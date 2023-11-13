@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
  * Classe responsável pela criação de builders de entidades
  *
  * @author wcaquino@gmail.com
- *
  */
 public class BuilderMasterPojo {
 
@@ -74,7 +73,7 @@ public class BuilderMasterPojo {
         builder.append(format("\t\treturn new %s(", classe.getSimpleName()));
         boolean first = true;
         for (Field campo : declaredFields) {
-            if(first) {
+            if (first) {
                 first = false;
             } else {
                 builder.append(", ");
@@ -86,7 +85,7 @@ public class BuilderMasterPojo {
         builder.append("}");
 
         for (String str : listaImports) {
-            if(!str.contains("java.lang."))
+            if (!str.contains("java.lang."))
                 System.out.println(str);
         }
         System.out.println(format("import %s;\n", classe.getCanonicalName()));
